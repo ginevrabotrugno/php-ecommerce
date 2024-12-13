@@ -1,5 +1,5 @@
 <?php
-$page = $_GET['page'];
+$page = isset($_GET['page']) ? $_GET['page'] : 'homepage.php';
 ?>
 
 <?php include './template-parts/header.php' ?>
