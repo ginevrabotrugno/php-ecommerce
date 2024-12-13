@@ -47,6 +47,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-9">
+                    <h1>Benvenuti</h1>
+                    <p class="lead">Benvenuti nel sito!</p>
+                    <p class="lead">Clicca sul bottone per iniziare gli acquisti.</p>
+                    <a href="#" class="btn btn-primary btn-lg mb-5 mt-3">
+                        Vai allo shopping &raquo;
+                    </a>
                 </div>
                 <div class="col-3">
                 <div class="card" style="width: 18rem;">
