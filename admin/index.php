@@ -1,5 +1,5 @@
 <?php
-$page = isset($_GET['page']) ? $_GET['page'] : 'homepage';
+$page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 ?>
 
 <?php include '../inc/init.php' ?>
@@ -9,7 +9,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'homepage';
     <div class="container">
         <div class="row">
             <div class="col-9">
-                <?php include ROOT_PATH . 'public/pages/' . $page . '.php' ?>
+                <?php include ROOT_PATH . 'admin/pages/' . $page . '.php' ?>
             </div>
             <?php include ROOT_PATH . 'public/template-parts/sidebar.php' ?>
         </div>
