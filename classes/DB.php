@@ -54,24 +54,27 @@ class DB {
         return $resultArray;
     }
     
-    public function select_one($tableName, $id, $columns = array()) {
-    
-        $strCol = '';
-        foreach($columns as $colName) {
-          $colName = esc($colName);
-          $strCol .= ' ' . $colName . ',';
+    public function select_one($tableName, $id, $columns = ['*']) {
+        // Se $columns non è un array, genera un'eccezione
+        if (!is_array($columns)) {
+            throw new InvalidArgumentException("Columns must be an array.");
         }
-        $strCol = substr($strCol, 0, -1);
-        $id = esc($id);
-        $query = "SELECT $strCol FROM $tableName WHERE id = $id";
     
-        $result = mysqli_query($this->conn, $query);
-        $resultArray = mysqli_fetch_assoc($result);
+        // Prepara i nomi delle colonne per la query
+        $columnsList = implode(',', $columns);
     
-        mysqli_free_result($result);
+        // Costruisci la query
+        $sql = "SELECT {$columnsList} FROM {$tableName} WHERE id = :id";
     
-        return $resultArray;
+        // Prepara ed esegui la query
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        // Ritorna il risultato
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    
     
     public function delete_one($tableName, $id) {
     
@@ -150,7 +153,7 @@ class DBManager {
     }
 
     public function get($id) {
-        $resultArr = $this->db->select_one($this->tableName, $this->columns, (int)$id);
+        $resultArr = $this->db->select_one($this->tableName, (int)$id);
         return (object) $resultArr;
     }
 
