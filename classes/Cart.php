@@ -13,8 +13,21 @@ class CartManager extends DBManager {
         $this->_initializeClientIdFromSession();
     }
 
-    // private methods 
+    public function getCurrentCartId(){
+        $cartId = 0;
+        $result = $this->db->query("SELECT * FROM carts WHERE client = '$this->clientId'");
+        if(count($result) > 0){
+            $cartId = $result[0]['id'];
+        } else {
+            $cartId = $this->create([
+                'client' => $this->clientId
+            ]);
+        }
 
+        return $cartId;
+    }
+
+    // private methods 
     private function _initializeClientIdFromSession(){
         if(isset($_SESSION['client'])){
             $this->clientId = $_SESSION['client'];
