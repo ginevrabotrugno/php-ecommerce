@@ -1,10 +1,18 @@
 <?php
 
 if(!defined('ROOT_URL')){
-    die;
+  die;
 }
 
-$id = htmlspecialchars(trim(isset($_GET['id'])));
+if(isset($_POST['add_to_cart'])){
+  $productId = htmlspecialchars(trim($_POST['id']));
+  $cm = new CartManager();
+  $cartId = $cm->getCurrentCartId();
+
+  $cm->addToCart($productId, $cartId);
+}
+
+$id = isset($_GET['id']) ? htmlspecialchars(trim($_GET['id'])) : null;
 $pm = new ProductManager();
 $product = $pm->get($id);
 
@@ -22,6 +30,9 @@ if(!(property_exists($product, 'id'))){
     <p class="lead">
         <?php echo $product->description ?> <br>
     </p>
-    <a href="#" class="btn btn-primary">Aggiungi al carrello</a>
+    <form method="post">
+      <input type="hidden" name="id" value="<?php echo $product->id ?>">
+      <input type="submit" name="add_to_cart" class="btn btn-primary" value="Aggiungi al carrello">
+    </form>
   </div>
 </div>

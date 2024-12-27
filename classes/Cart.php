@@ -27,6 +27,26 @@ class CartManager extends DBManager {
         return $cartId;
     }
 
+    public function addToCart($productId, $cartId){
+        $quantity = 0;
+        $result = $this->db->query("SELECT quantity FROM cart_items WHERE cart_id = $cartId AND product_id = $productId");
+        if(count($result) > 0){
+            $quantity = $result[0]['quantity'];
+        } 
+        $quantity++;
+
+        if(count($result) > 0){
+            $this->db->query("UPDATE cart_items SET quantity = $quantity WHERE cart_id = $cartId AND product_id = $productId");
+        } else {
+            $cartItemMgr = new CartItemManager();
+            $newId = $cartItemMgr->create([
+                'cart_id' => $cartId,
+                'product_id' => $productId,
+                'quantity' => 1
+            ]);
+        }
+    }
+
     // private methods 
     private function _initializeClientIdFromSession(){
         if(isset($_SESSION['client'])){
