@@ -23,7 +23,7 @@ class CartManager extends DBManager {
 
     public function getCartItems($id){
         return $this->db->query("
-            SELECT products.name AS name , products.description AS description , products.price AS single_price , cart_items.quantity AS quantity , products.price * cart_items.quantity AS total_price FROM cart_items INNER JOIN products ON cart_items.product_id = products.id WHERE cart_items.cart_id =  $id
+            SELECT products.name AS name , products.description AS description , products.price AS single_price , cart_items.quantity AS quantity , products.price * cart_items.quantity AS total_price , products.id AS id FROM cart_items INNER JOIN products ON cart_items.product_id = products.id WHERE cart_items.cart_id =  $id
         ");
     }
 
@@ -58,6 +58,23 @@ class CartManager extends DBManager {
                 'product_id' => $productId,
                 'quantity' => 1
             ]);
+        }
+    }
+
+    public function removeFromCart($productId, $cartId){
+        $quantity = 0;
+        $result = $this->db->query("SELECT quantity , id FROM cart_items WHERE cart_id = $cartId AND product_id = $productId");
+        $cartItemId = $result[0]['id'];
+        if(count($result) > 0){
+            $quantity = $result[0]['quantity'];
+        } 
+        $quantity--;
+
+        if($quantity > 0){
+            $this->db->execute("UPDATE cart_items SET quantity = $quantity WHERE cart_id = $cartId AND product_id = $productId");
+        } else {
+            $cartItemMgr = new CartItemManager();
+            $cartItemMgr->delete($cartItemId);
         }
     }
 

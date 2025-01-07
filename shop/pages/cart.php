@@ -3,6 +3,18 @@
 $cm = new CartManager();
 $cartId = $cm->getCurrentCartId();
 
+if(isset($_POST['minus'])){
+    // rimuovo dal carrello
+    $productId = htmlspecialchars(trim($_POST['id']));
+    $cm->removeFromCart($productId, $cartId);
+}
+
+if(isset($_POST['plus'])){
+    // aggiungo al carrello
+    $productId = htmlspecialchars(trim($_POST['id']));
+    $cm->addToCart($productId, $cartId);
+}
+
 $cart_total = $cm->getCartTotal($cartId);
 $cart_items = $cm->getCartItems($cartId);
 
@@ -28,11 +40,14 @@ $cart_items = $cm->getCartItems($cartId);
                         <span class="text-muted">€<?php echo $item['single_price'] ?></span>
                     </div>
                     <div class="col-6 col-lg-4 text-center">
-                        <div class="cart_btns btn-group" role="group">
-                            <button type="button" class="btn btn-sm btn-primary">-</button>
-                            <span class="text-muted text-center border-top border-bottom my-auto py-1" style="width:50px;"><?php echo $item['quantity'] ?></span>
-                            <button type="button" class="btn btn-sm btn-primary">+</button>
-                        </div>
+                        <form method="post">
+                            <div class="cart_btns btn-group" role="group">
+                                <button type="submit" name="minus" class="btn btn-sm btn-primary">-</button>
+                                <span class="text-muted text-center border-top border-bottom my-auto py-1" style="width:50px;"><?php echo $item['quantity'] ?></span>
+                                <input type="hidden" name="id" value="<?php echo $item['id']?>">
+                                <button type="submit" name="plus" class="btn btn-sm btn-primary">+</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="col-6 col-lg-2 text-center">
                         <strong class="text-primary">€<?php echo $item['total_price'] ?></strong>

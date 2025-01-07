@@ -35,9 +35,7 @@
                         <li class="nav-item">
                             <a class="nav-link position-relative mx-3" href="<?php echo ROOT_URL; ?>shop/?page=cart">
                                 <i class="fa-solid fa-cart-shopping fs-4 "></i>
-                                <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill text-bg-success">
-                                    1
-                                    <span class="visually-hidden">unread messages</span>
+                                <span id="js-totCart" class="position-absolute top-5 start-95 translate-middle badge rounded-pill text-bg-success">
                                 </span> 
                             </a>
                         </li>
