@@ -36,7 +36,7 @@ class CartManager extends DBManager {
         $quantity++;
 
         if(count($result) > 0){
-            $this->db->query("UPDATE cart_items SET quantity = $quantity WHERE cart_id = $cartId AND product_id = $productId");
+            $this->db->execute("UPDATE cart_items SET quantity = $quantity WHERE cart_id = $cartId AND product_id = $productId");
         } else {
             $cartItemMgr = new CartItemManager();
             $newId = $cartItemMgr->create([

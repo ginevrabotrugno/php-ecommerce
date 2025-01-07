@@ -17,20 +17,25 @@ class DB {
     }
 
     public function query($sql){
-        try
-        {
+        // try
+        // {
             $q = $this->pdo->query($sql);
             if(!$q){
-                throw new Exception('Error executing query...');
+                // throw new Exception('Error executing query...');
                 return;
             }
             $data = $q->fetchAll();
             return $data;
-        }
-        catch(Exception $e)
-        {
-            throw $e;
-        }
+        // }
+        // catch(Exception $e)
+        // {
+        //     throw $e;
+        // }
+    }
+
+    public function execute($sql){
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
     }
 
     public function select_all($tableName, $columns = array()) {
