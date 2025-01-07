@@ -1,33 +1,16 @@
 <?php
 
-$cart_total = [
-    'num_products' => 7,
-    'total' => 73.00
-];
+$cm = new CartManager();
+$cartId = $cm->getCurrentCartId();
 
-$cart_items = [
-    [
-        'name' => 'Prodotto 1',
-        'description' => 'Questo è il prodotto 1',
-        'single_price' => 29,
-        'quantity' => 2,
-        'total_price' => 58
-
-    ],
-    [
-        'name' => 'Prodotto 2',
-        'description' => 'Questo è il prodotto 1',
-        'single_price' => 3,
-        'quantity' => 5,
-        'total_price' => 15
-    ]
-];
+$cart_total = $cm->getCartTotal($cartId);
+$cart_items = $cm->getCartItems($cartId);
 
 ?>
 
 <div class="order-md-last m-4">
+    
     <?php if(count($cart_items) > 0): ?>
-        
     <h4 class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-primary">Carrello</span>
         <span class="badge bg-primary rounded-pill"><?php echo $cart_total['num_products']?></span>

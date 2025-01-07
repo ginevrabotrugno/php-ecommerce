@@ -13,6 +13,20 @@ class CartManager extends DBManager {
         $this->_initializeClientIdFromSession();
     }
 
+    public function getCartTotal($id){
+        $result = $this->db->query("
+        SELECT SUM(quantity) AS num_products , SUM(quantity* price) AS total FROM cart_items INNER JOIN products ON cart_items.product_id = products.id WHERE cart_id = $id
+        ");
+
+        return $result[0];
+    }
+
+    public function getCartItems($id){
+        return $this->db->query("
+            SELECT products.name AS name , products.description AS description , products.price AS single_price , cart_items.quantity AS quantity , products.price * cart_items.quantity AS total_price FROM cart_items INNER JOIN products ON cart_items.product_id = products.id WHERE cart_items.cart_id =  $id
+        ");
+    }
+
     public function getCurrentCartId(){
         $cartId = 0;
         $result = $this->db->query("SELECT * FROM carts WHERE client = '$this->clientId'");
