@@ -39,14 +39,21 @@
                                 </span> 
                             </a>
                         </li>
+                        <?php if(!$loggedInUser): ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Area Riservata</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" href="<?php echo ROOT_URL; ?>auth?page=login">Login</a></li>
                             </ul>
                         </li>
+                        <?php else: ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $loggedInUser->email ?></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="<?php echo ROOT_URL; ?>auth?page=logout">Logout</a></li>
+                            </ul>
+                        </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
