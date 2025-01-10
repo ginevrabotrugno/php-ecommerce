@@ -4,7 +4,7 @@ $cartId = $cm->getCurrentCartId();
 $cart_total = $cm->getCartTotal($cartId);
 ?>
 
-<footer class="bg-dark">
+<footer class="bg-dark position-absolute bottom-0 start-0 w-100">
         <div class="container">
             <hr>
             <p class="text-light"> Copyright &copy; 2024</p>
