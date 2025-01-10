@@ -39,6 +39,7 @@
                                 </span> 
                             </a>
                         </li>
+                        <!-- MENU OSPITE -->
                         <?php if(!$loggedInUser): ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Area Riservata</a>
@@ -46,7 +47,17 @@
                                 <li><a class="dropdown-item" href="<?php echo ROOT_URL; ?>auth?page=login">Login</a></li>
                             </ul>
                         </li>
-                        <?php else: ?>
+                        <!-- MENU AMMINISTRATORE -->
+                        <?php elseif($loggedInUser && $loggedInUser->is_admin): ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Amministratore</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="<?php echo ROOT_URL; ?>admin">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="<?php echo ROOT_URL; ?>auth?page=logout">Logout</a></li>
+                            </ul>
+                        </li>
+                        <!-- MENU UTENTE REGOLARE -->
+                        <?php elseif($loggedInUser && $loggedInUser->is_admin === false): ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $loggedInUser->email ?></a>
                             <ul class="dropdown-menu">
