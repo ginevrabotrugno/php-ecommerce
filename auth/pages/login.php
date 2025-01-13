@@ -38,4 +38,8 @@ if (isset($_POST['login'])) {
     </div>
 
     <button type="submit" name="login" class="btn btn-success">Entra</button>
+    <p class="mt-3">
+        Non hai un account?
+        <a href="<?php echo ROOT_URL ?>auth?page=register">Registrati</a>
+    </p>
 </form>
